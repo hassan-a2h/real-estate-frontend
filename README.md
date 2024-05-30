@@ -1,1 +1,1 @@
-# real-estate-frontend
+# Frontend for Real Estate App

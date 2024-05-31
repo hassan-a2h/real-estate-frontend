@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import './index.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
 
 function App() {
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/api/test')
-      .then(response => setMessage(response.data.message))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-500">{message || 'Loading...'}</h1>
-    </div>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 

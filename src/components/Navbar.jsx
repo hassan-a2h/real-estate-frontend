@@ -4,7 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
   const location = useLocation();
-  const { user, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+  const user = localStorage.getItem('token');
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
 

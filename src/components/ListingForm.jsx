@@ -12,6 +12,7 @@ const ListingForm = ({ editing }) => {
     images: '',
     status: ''
   });
+  const [listingErrors, setListingErrors] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -50,6 +51,14 @@ const ListingForm = ({ editing }) => {
       navigate('/listings');
     } catch (error) {
       console.error('Error saving listing:', error);
+      const errors = error.response.data.errors;
+
+        if (errors) {
+          setListingErrors(errors);
+          Object.values(errors).forEach((errorMessage) => {
+            toast.error(errorMessage);
+          });
+        }
       toast.error('Error saving listing.');
     }
   };
@@ -63,6 +72,8 @@ const ListingForm = ({ editing }) => {
         value={listing.title}
         onChange={handleChange}
         placeholder="Title"
+        // minLength={8}
+        // maxLength={64}
         className="w-full p-2 border rounded mb-2"
         required
       />
@@ -71,6 +82,8 @@ const ListingForm = ({ editing }) => {
         value={listing.description}
         onChange={handleChange}
         placeholder="Description & Contact details"
+        // minLength={4}
+        // maxLength={512}
         className="w-full p-2 border rounded mb-2"
         required
       />
@@ -80,6 +93,8 @@ const ListingForm = ({ editing }) => {
         value={listing.price}
         onChange={handleChange}
         placeholder="Price"
+        // min={1000}
+        // max={50000000}
         className="w-full p-2 border rounded mb-2"
         required
       />
@@ -89,6 +104,8 @@ const ListingForm = ({ editing }) => {
         value={listing.location}
         onChange={handleChange}
         placeholder="Location"
+        // minLength={8}
+        // maxLength={128}
         className="w-full p-2 border rounded mb-2"
         required
       />

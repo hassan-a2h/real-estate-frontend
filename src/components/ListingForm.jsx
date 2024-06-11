@@ -72,8 +72,8 @@ const ListingForm = ({ editing }) => {
         value={listing.title}
         onChange={handleChange}
         placeholder="Title"
-        // minLength={8}
-        // maxLength={64}
+        minLength={8}
+        maxLength={64}
         className="w-full p-2 border rounded mb-2"
         required
       />
@@ -82,8 +82,8 @@ const ListingForm = ({ editing }) => {
         value={listing.description}
         onChange={handleChange}
         placeholder="Description & Contact details"
-        // minLength={4}
-        // maxLength={512}
+        minLength={4}
+        maxLength={512}
         className="w-full p-2 border rounded mb-2"
         required
       />
@@ -93,8 +93,8 @@ const ListingForm = ({ editing }) => {
         value={listing.price}
         onChange={handleChange}
         placeholder="Price"
-        // min={1000}
-        // max={50000000}
+        min={1000}
+        max={50000000}
         className="w-full p-2 border rounded mb-2"
         required
       />
@@ -104,8 +104,8 @@ const ListingForm = ({ editing }) => {
         value={listing.location}
         onChange={handleChange}
         placeholder="Location"
-        // minLength={8}
-        // maxLength={128}
+        minLength={8}
+        maxLength={128}
         className="w-full p-2 border rounded mb-2"
         required
       />

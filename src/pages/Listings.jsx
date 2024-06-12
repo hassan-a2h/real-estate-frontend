@@ -7,6 +7,11 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import Listing from '../components/Listing';
 import Categories from '../components/Categories';
+import About from '../components/About';
+import ContactUs from '../components/ContactUs';
+import AboutTeam from '../components/AboutTeam';
+import Testimonials from '../components/Testimonials';
+import Footer from '../components/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Listings = () => {
@@ -40,7 +45,7 @@ const Listings = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container bg-white p-0">
       <ToastContainer />
       <Header />
       <SearchFilter 
@@ -52,11 +57,17 @@ const Listings = () => {
         handleDelete={handleDelete}
       />
       <Categories />
-      <div className='flex justify-center'>
+      <About />
+      <ContactUs/>
+      <AboutTeam />
+      <Testimonials />
+      <Footer />
+      {/* <div className='flex justify-center'>
         <Link to="/listings/new" className="bg-blue-500 text-white p-3 px-20 rounded mt-3">
           <button>Add New Listing</button>
         </Link>
-      </div>
+      </div> */}
+      <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top"><i className="bi bi-arrow-up"></i></a>
     </div>
   );
 };

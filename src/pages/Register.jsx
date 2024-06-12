@@ -33,15 +33,17 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="login-form">
       <ToastContainer />
       <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
         <h2 className="mb-4 text-xl font-bold">Register</h2>
         <div className="mb-4">
-          <label>Name</label>
+          <label htmlFor='name'>Name</label>
           <input
             type="text"
+            id="name"
             value={name}
+            placeholder='John Doe'
             minLength={3}
             maxLength={32}
             onChange={(e) => setName(e.target.value)}
@@ -49,21 +51,25 @@ const Register = () => {
           />
         </div>
         <div className="mb-4">
-          <label>Email</label>
+          <label htmlFor='email'>Email</label>
           <input
             type="email"
+            id='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder='user@example.com'
             className="w-full p-2 border rounded"
           />
         </div>
         <div className="mb-4">
-          <label>Password</label>
+          <label htmlFor='password'>Password</label>
           <input
             type="password"
             value={password}
+            id='password'
             minLength={8}
             maxLength={32}
+            placeholder='********'
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border rounded"
           />
@@ -71,7 +77,7 @@ const Register = () => {
         <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">
           Register
         </button>
-        <h5 className='mt-4'>Already have an account? <Link to='/login' className='bg-green-400 shadow-lg p-2 rounded-lg'>Login</Link></h5>
+        <h5 className='mt-4'>Have an account? <Link to='/login' className='register'>Login</Link></h5>
       </form>
     </div>
   );

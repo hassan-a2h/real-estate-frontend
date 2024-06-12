@@ -39,26 +39,30 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="login-form">
       <ToastContainer />
       <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
         <h2 className="mb-4 text-xl font-bold">Login</h2>
         <div className="mb-4">
-          <label>Email</label>
+          <label htmlFor='email'>Email</label>
           <input
             type="email"
+            id='email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder='user@example.com'
             className="w-full p-2 border rounded"
           />
         </div>
         <div className="mb-4">
-          <label>Password</label>
+          <label htmlFor='password'>Password</label>
           <input
             type="password"
             value={password}
+            id='password'
             minLength={8}
             maxLength={32}
+            placeholder='********'
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border rounded"
           />
@@ -66,7 +70,7 @@ const Login = () => {
         <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">
           Login
         </button>
-        <h5 className='mt-4'>Signup here! <Link to='/register' className='bg-green-400 shadow-lg p-2 rounded-lg'>Register</Link></h5>
+        <h5 className='mt-4'>Signup here! <Link to='/register' className='register'>Register</Link></h5>
       </form>
     </div>
   );

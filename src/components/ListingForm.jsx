@@ -64,7 +64,8 @@ const ListingForm = ({ editing }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="container mx-auto px-4">
+    <div className="login-form listing-form">
+      <form onSubmit={handleSubmit} className="">
       <h2 className="text-2xl font-bold mb-4">{editing ? 'Edit Listing' : 'Add Listing'}</h2>
       <input
         type="text"
@@ -76,7 +77,7 @@ const ListingForm = ({ editing }) => {
         maxLength={64}
         className="w-full p-2 border rounded mb-2"
         required
-      />
+      /> <br />
       <textarea
         name="description"
         value={listing.description}
@@ -84,9 +85,9 @@ const ListingForm = ({ editing }) => {
         placeholder="Description & Contact details"
         minLength={4}
         maxLength={512}
-        className="w-full p-2 border rounded mb-2"
+        className="text-area"
         required
-      />
+      /> <br />
       <input
         type="number"
         name="price"
@@ -97,7 +98,7 @@ const ListingForm = ({ editing }) => {
         max={50000000}
         className="w-full p-2 border rounded mb-2"
         required
-      />
+      /> <br />
       <input
         type="text"
         name="location"
@@ -108,22 +109,23 @@ const ListingForm = ({ editing }) => {
         maxLength={128}
         className="w-full p-2 border rounded mb-2"
         required
-      />
+      /> <br />
       <select
         name="status"
         value={listing.status}
         onChange={handleChange}
         className="w-full p-2 border rounded mb-2"
         required
-      >
+      > 
         <option value="">Select Status</option>
         <option value="available">Available</option>
         <option value="sold">Sold</option>
-      </select>
+      </select> <br />
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         {editing ? 'Update Listing' : 'Add Listing'}
       </button>
     </form>
+    </div>
   );
 };
 

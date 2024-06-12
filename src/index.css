@@ -12,12 +12,17 @@
   background-color: #EFFDF5;
 }
 
+.listing-form form {
+  padding: 20px;
+  background-color: white !important;
+}
+
 form {
   box-shadow: 1px 1px 4px black;
   margin-top: 10px;
 }
 
-.login-form input {
+.login-form input, .listing-form .text-area {
   width: 300px;
 }
 

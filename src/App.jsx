@@ -4,7 +4,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Navbar from './components/Navbar';
+import Navbar from './components/UpdatedNavbar';
 import Listings from './pages/Listings';
 import ListingForm from './components/ListingForm';
 import { ToastContainer } from 'react-toastify';

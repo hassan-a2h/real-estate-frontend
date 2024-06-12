@@ -5,6 +5,7 @@ import SearchFilter from '../components/SearchFilter';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import Listing from '../components/Listing';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Listings = () => {
@@ -45,31 +46,12 @@ const Listings = () => {
         listings={listings}
         setFilteredListings={setFilteredListings}
       />
+      <Listing listings={filteredListings} handleDelete={handleDelete}/>
       <div className='flex justify-center'>
         <Link to="/listings/new" className="bg-blue-500 text-white p-3 px-20 rounded mt-3">
           <button>Add New Listing</button>
         </Link>
       </div>
-
-      <ul className='grid grid-cols-3 gap-3'>
-        {filteredListings.map((listing) => (
-          <li key={listing._id} className="border p-2 rounded-md">
-            <h3 className="text-xl font-bold">{listing.title}</h3>
-            <p><span className='font-bold underline'>Description </span>{listing.description}</p>
-            <p>Price: <span className='underline'>PKR</span>{listing.price}</p>
-            <p>Location: {listing.location}</p>
-            <p>Status: {listing.status}</p>
-            <div className="flex space-x-4">
-              <Link to={`/listings/edit/${listing._id}`} className="bg-yellow-500 text-white p-2 rounded">
-                Edit
-              </Link>
-              <button onClick={() => handleDelete(listing._id)} className="bg-red-500 text-white p-2 rounded">
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

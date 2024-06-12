@@ -10,8 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const Listings = () => {
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState({ minPrice: '', maxPrice: '', location: '' });
 
   useEffect(() => {
     fetchListings();
@@ -26,18 +24,6 @@ const Listings = () => {
       console.error('Error fetching listings:', error);
       toast.error('Error fetching listings.');
     }
-  };
-
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      [name]: value,
-    }));
   };
 
   const handleDelete = async (id) => {

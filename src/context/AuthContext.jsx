@@ -33,6 +33,7 @@ const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.post('/api/users/login', { email, password });
       localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.role);
       setUser(data.user);
       console.log('Hello I am here');
       toast.success('Login successful');
@@ -44,6 +45,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     await axios.post('/api/auth/logout');
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     setUser(null);
     navigate('/login');
     toast.success('Logged out successfully');

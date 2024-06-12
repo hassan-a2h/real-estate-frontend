@@ -76,7 +76,7 @@ const SearchFilter = ({ listings, setFilteredListings }) => {
                         </div>
                     </div>
                     <div className="col-md-2">
-                        <button className="btn btn-dark border-0 w-100 py-3" onClick={handleSearchFilter}>Search</button>
+                        <button className="btn btn-dark border-0 w-100 py-2" onClick={handleSearchFilter}>Search</button>
                     </div>
                 </div>
             </div>

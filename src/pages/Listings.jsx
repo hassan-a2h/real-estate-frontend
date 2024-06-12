@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import Listing from '../components/Listing';
+import Categories from '../components/Categories';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Listings = () => {
@@ -46,7 +47,11 @@ const Listings = () => {
         listings={listings}
         setFilteredListings={setFilteredListings}
       />
-      <Listing listings={filteredListings} handleDelete={handleDelete}/>
+      <Listing 
+        listings={filteredListings} 
+        handleDelete={handleDelete}
+      />
+      <Categories />
       <div className='flex justify-center'>
         <Link to="/listings/new" className="bg-blue-500 text-white p-3 px-20 rounded mt-3">
           <button>Add New Listing</button>

@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom';
 import logo from '../assets/img/icon-deal.png';
+import { AuthContext } from '../context/AuthContext';
+import { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const UpdatedNavbar = () => {
+  const location = useLocation();
+  const { logout } = useContext(AuthContext);
+  const user = localStorage.getItem('token');
+  const isLoginPage = location.pathname === '/login';
+  const isRegisterPage = location.pathname === '/register';
+
   return (
     <div className="container-fluid nav-bar bg-transparent">
       <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
@@ -16,8 +24,25 @@ const UpdatedNavbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
                     <div className="navbar-nav ms-auto">
+                        {user ? (
+                            <a onClick={logout} className="nav-item nav-link active">
+                            Sign Out
+                            </a>
+                        ) : (
+                            <>
+                            {!isLoginPage && (
+                                <Link to="/login" className="nav-item nav-link">
+                                Login
+                                </Link>
+                            )}
+                            {!isRegisterPage && (
+                                <Link to="/register" className="nav-item nav-link">
+                                Register
+                                </Link>
+                            )}
+                            </>
+                        )}
                         <a href="index.html" className="nav-item nav-link active">Home</a>
-                        <a href="about.html" className="nav-item nav-link">About</a>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">

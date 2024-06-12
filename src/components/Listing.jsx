@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Listing = ({ listings, handleDelete }) => {
   return (
-        <div className="container-xxl py-5">
+        <div className="container-xxl py-5" id='listings'>
             <div className="container">
                 <div className="row g-0 gx-5 align-items-end">
                     <div className="col-lg-6">

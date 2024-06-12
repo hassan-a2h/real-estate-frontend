@@ -15,8 +15,8 @@ const ContactUs = () => {
                             <h1 className="mb-3">Contact With Our Certified Agent</h1>
                             <p>Eirmod sed ipsum dolor sit rebum magna erat. Tempor lorem kasd vero ipsum sit sit diam justo sed vero dolor duo.</p>
                         </div>
-                        <a href="" className="btn btn-primary py-3 px-4 me-2"><i className="fa fa-phone-alt me-2"></i>Make A Call</a>
-                        <a href="" className="btn btn-dark py-3 px-4"><i className="fa fa-calendar-alt me-2"></i>Get Appoinment</a>
+                        <a href="skype:Makaan_Properties?call" className="btn btn-primary py-3 px-4 me-2"><i className="fa fa-phone-alt me-2"></i>Make A Call</a>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE" target="_blank" className="btn btn-dark py-3 px-4"><i className="fa fa-calendar-alt me-2"></i>Get Appoinment</a>
                     </div>
                 </div>
             </div>

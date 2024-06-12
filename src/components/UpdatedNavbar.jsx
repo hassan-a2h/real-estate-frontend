@@ -25,9 +25,9 @@ const UpdatedNavbar = () => {
           <div className="collapse navbar-collapse" id="navbarCollapse">
                     <div className="navbar-nav ms-auto">
                         {user ? (
-                            <a onClick={logout} className="nav-item nav-link active">
+                            <Link onClick={logout} className="nav-item nav-link active">
                             Sign Out
-                            </a>
+                            </Link>
                         ) : (
                             <>
                             {!isLoginPage && (

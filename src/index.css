@@ -12,6 +12,25 @@
   background-color: #EFFDF5;
 }
 
+.homepage {
+  padding-top: 40px;
+  flex-direction: column;
+}
+
+.homepage .link {
+  border: 2px solid #313131;
+  border-radius: 5px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.homepage .link:hover {
+  background: white;
+  text-decoration: none;
+  transition: 1s;
+}
+
 .listing-form form {
   padding: 20px;
   background-color: white !important;

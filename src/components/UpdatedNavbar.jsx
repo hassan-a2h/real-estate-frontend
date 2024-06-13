@@ -73,7 +73,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                             )}
                             </>
                         )}
-                        <a href="index.html" className="nav-item nav-link active">Add Agent</a>
+                        <Link to='/register' className='nav-item nav-link'>Add Agent</Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">

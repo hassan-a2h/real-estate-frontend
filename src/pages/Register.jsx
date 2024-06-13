@@ -9,11 +9,13 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [newUserRole, setNewUserRole] = useState('agent');
   const { user, register } = useContext(AuthContext);
+  const role = localStorage.getItem('role');
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (user && role !== 'admin') {
       navigate('/');
     }
   }, [user, navigate]);
@@ -25,6 +27,12 @@ const Register = () => {
       return;
     }
     try {
+      if (role === 'admin') {
+        await register(name, email, password, newUserRole);
+        toast.success('New agent added');
+        navigate('/listings');
+        return;
+      }
       await register(name, email, password);
       navigate('/login', { state: { fromRegister: true } });
     } catch (error) {
@@ -74,10 +82,19 @@ const Register = () => {
             className="w-full p-2 border rounded"
           />
         </div>
+        {role === 'admin' && (
+          <div className="mb-4">
+          <label htmlFor='role'>Role</label>
+          <select id='role' onChange={(e) => setNewUserRole(e.target.value)} className='w-full p-2 border rounded'>
+            <option selected value='agent'>Agent</option>
+            <option value='user'>User</option>
+          </select>
+        </div>
+        )}
         <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">
           Register
         </button>
-        <h5 className='mt-4'>Have an account? <Link to='/login' className='register'>Login</Link></h5>
+        {role !== 'admin' && <h5 className='mt-4'>Have an account? <Link to='/login' className='register'>Login</Link></h5> }
       </form>
     </div>
   );

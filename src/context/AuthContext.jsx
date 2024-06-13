@@ -19,7 +19,8 @@ const AuthProvider = ({ children }) => {
           const { data } = await axios.get('/api/auth/check-auth', {
             headers: { Authorization: `Bearer ${token}` }
           });
-          setUser(data.user);
+          console.log('data received on authCheck:', data);
+          setUser(data.id);
         } catch (error) {
           setUser(null);
         }
@@ -51,9 +52,9 @@ const AuthProvider = ({ children }) => {
     toast.success('Logged out successfully');
   };
 
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, role) => {
     try {
-      await axios.post('/api/users/register', { name, email, password });
+      await axios.post('/api/users/register', { name, email, password, role });
       toast.success('Registration successful');
     } catch (error) {
       toast.error('Registration failed');

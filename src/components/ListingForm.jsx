@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../context/AuthContext';
 
 const ListingForm = ({ editing }) => {
   const [listing, setListing] = useState({
@@ -10,7 +11,8 @@ const ListingForm = ({ editing }) => {
     price: '',
     location: '',
     images: '',
-    status: ''
+    status: '',
+    postedBy: useContext(AuthContext).user.id,
   });
   const [listingErrors, setListingErrors] = useState({});
   const navigate = useNavigate();

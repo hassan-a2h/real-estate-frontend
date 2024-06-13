@@ -7,7 +7,7 @@ const UpdatedNavbar = () => {
   const location = useLocation();
   const { logout } = useContext(AuthContext);
   const user = localStorage.getItem('token');
-  const role = localStorage.getItem('role') || 'user';
+  const role = useContext(AuthContext)?.user?.role || 'user';
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
 

@@ -16,11 +16,10 @@ const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const { data } = await axios.get('/api/auth/check-auth', {
+          const response = await axios.get('/api/auth/check-auth', {
             headers: { Authorization: `Bearer ${token}` }
           });
-          console.log('data received on authCheck:', data);
-          setUser(data.id);
+          setUser({ id: response.data.id, role: response.data.role });
         } catch (error) {
           setUser(null);
         }

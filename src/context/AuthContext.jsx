@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
       const { data } = await axios.post('/api/users/login', { email, password });
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
-      setUser(data.user);
+      setUser({ id: data._id, role: data.role });
       console.log('Hello I am here');
       toast.success('Login successful');
     } catch (error) {
@@ -46,6 +46,7 @@ const AuthProvider = ({ children }) => {
     await axios.post('/api/auth/logout');
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('id');
     setUser(null);
     navigate('/login');
     toast.success('Logged out successfully');

@@ -1,12 +1,14 @@
 import logo from '../assets/img/icon-deal.png';
 import { AuthContext } from '../context/AuthContext';
-import { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import '../styles/modal.css'
+import Modal from 'react-modal';
 
 const UpdatedNavbar = () => {
   const location = useLocation();
   const { logout } = useContext(AuthContext);
-  const user = localStorage.getItem('token');
+  const user = useContext(AuthContext)?.user?.id;
   const role = useContext(AuthContext)?.user?.role || 'user';
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
@@ -89,7 +91,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>
-                        <a href="contact.html" className="nav-item nav-link">Contact</a>
+                        <a href="#contact-us" className="nav-item nav-link">Contact</a>
                     </div>
                     <Link to="/listings/new"><a href="" className="btn btn-primary px-3 d-none d-lg-flex">Add Property</a></Link>
                 </div>
@@ -147,7 +149,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>
-                        <a href="contact.html" className="nav-item nav-link">Contact</a>
+                        <a href="#contact-us" className="nav-item nav-link">Contact</a>
                     </div>
                 </div>
       </nav>
@@ -156,8 +158,16 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
 }
 
 function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
+    
+    function handleCustomListing() {
+        navigate(`/listings/agent/${user}`);
+      }
+
     return (
-        <div className="container-fluid nav-bar bg-transparent">
+    <div className="container-fluid nav-bar bg-transparent">
+            
       <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
           <Link to="/listings" className="navbar-brand d-flex align-items-center text-center">
               <div className="icon p-2 me-2">
@@ -188,7 +198,7 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                             )}
                             </>
                         )}
-                        <a href="index.html" className="nav-item nav-link active">My Listings</a>
+                        <span className="nav-item nav-link active" style={{"cursor": "pointer"}} onClick={() => handleCustomListing()}>My Listings</span>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
@@ -204,7 +214,8 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>
-                        <a href="contact.html" className="nav-item nav-link">Contact</a>
+                        <a href="#" className="nav-item nav-link" onClick={() => setIsModalOpen(true)}>Socials</a>
+                        <a href="#contact-us" className="nav-item nav-link">Contact</a>
                     </div>
                     <Link to="/listings/new"><a href="" className="btn btn-primary px-3 d-none d-lg-flex">Add Property</a></Link>
                 </div>
@@ -212,6 +223,5 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     </div>
     );
 }
-
 
 export default UpdatedNavbar;

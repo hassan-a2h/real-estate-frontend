@@ -2,7 +2,7 @@ import callToAction from '../assets/img/call-to-action.jpg';
 
 const ContactUs = () => {
   return (
-    <div className="container-xxl py-5">
+    <div className="container-xxl py-5" id="contact-us">
     <div className="container">
         <div className="bg-light rounded p-3">
             <div className="bg-white rounded p-4" style={{"border": "1px dashed rgba(0, 185, 142, .3)"}}>

@@ -5,7 +5,7 @@ const Listing = ({ listings, handleDelete }) => {
   return (
         <div className="container-xxl py-5" id='listings'>
             <div className="container">
-                <div className="row g-0 gx-5 align-items-end">
+                {listings.length > 0 && <div className="row g-0 gx-5 align-items-end">
                     <div className="col-lg-6">
                         <div className="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
                             <h1 className="mb-3">Property Listing</h1>
@@ -25,10 +25,13 @@ const Listing = ({ listings, handleDelete }) => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div>}
                 <div className="tab-content">
                     <div id="tab-1" className="tab-pane fade show p-0 active">
-                        <div className="row g-4">
+                        { listings.length === 0 && <div>
+                            <h3>No Properties Listed</h3>
+                        </div> }
+                        { listings.length > 0 && <div className="row g-4">
                               { listings.map((listing) => (
                                 <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s"  key={listing._id}>
                                 <div className="property-item rounded overflow-hidden">
@@ -51,7 +54,7 @@ const Listing = ({ listings, handleDelete }) => {
                                 </div>
                               ))}
                                 
-                            </div>
+                            </div> }
                         
                     </div>
                 </div>

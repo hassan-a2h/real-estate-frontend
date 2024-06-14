@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../context/AuthContext';
 
 const ListingForm = ({ editing }) => {
+  const { user } = useContext(AuthContext);
   const [listing, setListing] = useState({
     title: '',
     description: '',
@@ -12,8 +13,10 @@ const ListingForm = ({ editing }) => {
     location: '',
     images: '',
     status: '',
-    postedBy: useContext(AuthContext).user.id,
+    postedBy: user?.id,
+    category: 'home',
   });
+
   const [listingErrors, setListingErrors] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
@@ -53,7 +56,7 @@ const ListingForm = ({ editing }) => {
       navigate('/listings');
     } catch (error) {
       console.error('Error saving listing:', error);
-      const errors = error.response.data.errors;
+      const errors = error?.response?.data?.errors;
 
         if (errors) {
           setListingErrors(errors);
@@ -122,6 +125,22 @@ const ListingForm = ({ editing }) => {
         <option value="">Select Status</option>
         <option value="available">Available</option>
         <option value="sold">Sold</option>
+      </select> <br />
+      <select
+        name="category"
+        value={listing.category}
+        onChange={handleChange}
+        className="w-full p-2 border rounded mb-2"
+        required
+      > 
+        <option value="Home" selected>Home</option>
+        <option value="Villa">Villa</option>
+        <option value="Apartment">Apartment</option>
+        <option value="Building">Building</option>
+        <option value="Office">Office</option>
+        <option value="Townhouse">Townhouse</option>
+        <option value="Shop">Shop</option>
+        <option value="Garage">Garage</option>
       </select> <br />
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         {editing ? 'Update Listing' : 'Add Listing'}

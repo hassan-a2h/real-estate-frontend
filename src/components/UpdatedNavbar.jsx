@@ -2,10 +2,8 @@ import logo from '../assets/img/icon-deal.png';
 import { AuthContext } from '../context/AuthContext';
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import '../styles/modal.css'
-import Modal from 'react-modal';
 
-const UpdatedNavbar = () => {
+const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
   const location = useLocation();
   const { logout } = useContext(AuthContext);
   const user = useContext(AuthContext)?.user?.id;
@@ -31,6 +29,8 @@ const UpdatedNavbar = () => {
             logout={logout}
             isLoginPage={isLoginPage}
             isRegisterPage={isRegisterPage}
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
             /> :
             <UserNavbar 
             user={user}
@@ -44,7 +44,7 @@ const UpdatedNavbar = () => {
 
 function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     return (
-        <div className="container-fluid nav-bar bg-transparent">
+        <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
       <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
           <Link to="/listings" className="navbar-brand d-flex align-items-center text-center">
               <div className="icon p-2 me-2">
@@ -102,7 +102,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
 
 function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     return (
-        <div className="container-fluid nav-bar bg-transparent">
+        <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
       <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
           <Link to="/listings" className="navbar-brand d-flex align-items-center text-center">
               <div className="icon p-2 me-2">
@@ -157,8 +157,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     );
 }
 
-function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen, isModalOpen }) {
     const navigate = useNavigate();
     
     function handleCustomListing() {
@@ -166,7 +165,7 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
       }
 
     return (
-    <div className="container-fluid nav-bar bg-transparent">
+    <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
             
       <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
           <Link to="/listings" className="navbar-brand d-flex align-items-center text-center">
@@ -214,7 +213,7 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>
-                        <a href="#" className="nav-item nav-link" onClick={() => setIsModalOpen(true)}>Socials</a>
+                        <a href="#" className="nav-item nav-link" onClick={() => setIsModalOpen(() => !isModalOpen)}>Socials</a>
                         <a href="#contact-us" className="nav-item nav-link">Contact</a>
                     </div>
                     <Link to="/listings/new"><a href="" className="btn btn-primary px-3 d-none d-lg-flex">Add Property</a></Link>

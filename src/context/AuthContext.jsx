@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const AuthContext = createContext();
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'http://localhost:3000';
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

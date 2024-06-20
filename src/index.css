@@ -41,15 +41,15 @@ form {
   margin-top: 10px;
 }
 
-.login-form input, .listing-form .text-area {
+.login-form input, .listing-form .text-area, .modal-form input {
   width: 300px;
 }
 
-.login-form label {
+.login-form label, .modal-form label {
   display: block;
 }
 
-.login-form button {
+.login-form button, .modal-form button {
   width: 300px;
   background-color: #0F0F0F;
   color: white;
@@ -64,4 +64,31 @@ form {
   padding: 10px;
   margin-top: 10px;
   border-radius: 5px;
+}
+
+.modal-form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-form label {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.error {
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 4px;
 }

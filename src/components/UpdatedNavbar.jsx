@@ -77,6 +77,9 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                             </>
                         )}
                         <Link to='/register' className='nav-item nav-link'>Add Agent</Link>
+                        <Link to="/chat" className="nav-item nav-link">
+                            Chat
+                        </Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
@@ -143,6 +146,9 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                                 <a href="property-agent.html" className="dropdown-item">Property Agent</a>
                             </div>
                         </div>
+                        <Link to="/chat" className="nav-item nav-link">
+                            Chat
+                        </Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div className="dropdown-menu rounded-0 m-0">
@@ -199,6 +205,9 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen
                             </>
                         )}
                         <span className="nav-item nav-link active" style={{"cursor": "pointer"}} onClick={() => handleCustomListing()}>My Listings</span>
+                        <Link to="/chat" className="nav-item nav-link">
+                          Chat
+                        </Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">

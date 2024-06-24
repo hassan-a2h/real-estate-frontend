@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from '../assets/img/icon-deal.png';
 import { AuthContext } from '../context/AuthContext';
 import { useContext, useState } from 'react';
@@ -44,8 +45,8 @@ const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
 
 function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     return (
-        <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
-      <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
+    <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
+        <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
           <Link to="/listings" className="navbar-brand d-flex align-items-center text-center">
               <div className="icon p-2 me-2">
                 <img className="img-fluid" src={logo} alt="Icon" style={{"width": "30" + "px", "height": "30" + "px"}} />

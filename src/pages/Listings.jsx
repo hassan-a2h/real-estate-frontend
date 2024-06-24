@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Header from '../components/Header';
 import SearchFilter from '../components/SearchFilter';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import Listing from '../components/Listing';
@@ -17,6 +18,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const Listings = () => {
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
+
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     fetchListings();
@@ -55,6 +58,7 @@ const Listings = () => {
       <Listing 
         listings={filteredListings} 
         handleDelete={handleDelete}
+        userId={user?.id}
       />
       <Categories />
       <About />

@@ -11,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [newUserRole, setNewUserRole] = useState('agent');
   const { user, register } = useContext(AuthContext);
-  const role = useContext(AuthContext).user.role;
+  const role = useContext(AuthContext)?.user?.role;
   const navigate = useNavigate();
 
   useEffect(() => {

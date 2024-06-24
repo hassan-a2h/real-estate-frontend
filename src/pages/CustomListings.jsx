@@ -18,7 +18,7 @@ function CustomListings() {
       if (type === 'agent') {
         response = await axios.get('/api/listings', {
           params: { agentId: value }
-        });  
+        });
       } else {
         response = await axios.get('/api/listings', {
           params: { category: value }

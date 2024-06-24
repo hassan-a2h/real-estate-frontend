@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
 import SocialModal from './components/SocialModal';
+import Chat from './pages/Chat';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,6 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div style={{position: 'absolute', width: '100%', height: '100%'}}>
           <Modal isOpen={isModalOpen}>
           <button onClick={() => setIsModalOpen(false)}>x</button>
           <div >
@@ -30,7 +30,6 @@ function App() {
             />
           </div>
         </Modal>
-        </div>
         <Navbar 
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
@@ -45,6 +44,7 @@ function App() {
             <Route path="/listings/new" element={<ListingForm />} />
             <Route path="/listings/edit/:id" element={<ListingForm editing />} />
             <Route path="/listings/:type/:value" element={<CustomListings />} />
+            <Route path="/chat" element={<Chat />} />
           </Route>
         </Routes>
       </AuthProvider>

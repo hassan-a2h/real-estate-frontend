@@ -34,6 +34,7 @@ const AuthProvider = ({ children }) => {
       const { data } = await axios.post('/api/users/login', { email, password });
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
+      localStorage.setItem('userId', data._id);
       setUser({ id: data._id, role: data.role });
       console.log('Hello I am here');
       toast.success('Login successful');

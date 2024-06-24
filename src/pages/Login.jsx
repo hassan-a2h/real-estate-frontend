@@ -40,7 +40,6 @@ const Login = () => {
 
   return (
     <div className="login-form">
-      <ToastContainer />
       <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
         <h2 className="mb-4 text-xl font-bold">Login</h2>
         <div className="mb-4">

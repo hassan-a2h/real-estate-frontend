@@ -1,62 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const socket = io('http://localhost:3000'); // Update with your server URL
 
 const Chat = () => {
+  const id = localStorage.getItem('userId');
   const location = useLocation();
-  const { userId } = location.state;
+  const { userId } = location.state || { userId: id };
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    socket.on('receiveMessage', (data) => {
-      if (currentChat && data.listingId === currentChat.listingId) {
-        setMessages((prevMessages) => [...prevMessages, data]);
-      }
-    });
-
-    // Fetch user chats from the server (this is a placeholder)
+    // Fetch user chats when component mounts
     fetchChats();
 
+    // Listen for incoming messages
+    socket.on('receiveMessage', handleReceiveMessage);
+
     return () => {
-      socket.off('receiveMessage');
+      socket.off('receiveMessage', handleReceiveMessage);
     };
-  }, [currentChat]);
+  }, []);
 
-  const fetchChats = () => {
-    // Replace with your API call to fetch chats
-    const dummyChats = [
-      { listingId: '1', userId: '123', originalPosterId: '456', title: 'Chat 1' },
-      { listingId: '2', userId: '123', originalPosterId: '789', title: 'Chat 2' },
-    ];
-    setChats(dummyChats);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const fetchChats = async () => {
+    try {
+      const response = await axios.get(`/api/c/chats/${userId}`);
+      setChats(response.data);
+    } catch (error) {
+      console.error('Error fetching chats:', error);
+    }
   };
 
-  const handleChatSelect = (chat) => {
+  const handleChatSelect = async (chat) => {
     setCurrentChat(chat);
-    // Fetch chat messages from the server (this is a placeholder)
-    const dummyMessages = [
-      { userId: chat.userId, message: 'Hello!', timestamp: new Date() },
-      { userId: chat.originalPosterId, message: 'Hi!', timestamp: new Date() },
-    ];
-    setMessages(dummyMessages);
+    try {
+      const response = await axios.get(`/api/c/chats/${chat._id}/messages`);
+      setMessages(response.data);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
   };
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
     const newMessage = {
-      listingId: currentChat.listingId,
+      chatId: currentChat._id,
       userId,
-      originalPosterId: currentChat.originalPosterId,
       message,
-      timestamp: new Date(),
     };
     socket.emit('sendMessage', newMessage);
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
     setMessage('');
+  };
+
+  const handleReceiveMessage = (data) => {
+    if (data.chatId === (currentChat && currentChat._id)) {
+      setMessages((prevMessages) => [...prevMessages, data]);
+    }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -64,8 +76,12 @@ const Chat = () => {
       <div style={{ width: '30%', borderRight: '1px solid #ccc', padding: '10px' }}>
         <h3>Chats</h3>
         {chats.map((chat) => (
-          <div key={chat.listingId} onClick={() => handleChatSelect(chat)} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
-            {chat.title}
+          <div
+            key={chat._id}
+            onClick={() => handleChatSelect(chat)}
+            style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}
+          >
+            {chat._id}
           </div>
         ))}
       </div>
@@ -76,18 +92,22 @@ const Chat = () => {
             <div style={{ height: '80%', overflowY: 'scroll' }}>
               {messages.map((msg, index) => (
                 <div key={index} style={{ marginBottom: '10px' }}>
-                  <strong>{msg.userId === userId ? 'You' : 'Seller'}:</strong> {msg.message}
+                  {console.log('message:', msg, '- userId:', userId)}
+                  <strong>{(msg?.senderId === userId || msg?.userId === userId) ? 'You' : 'Seller' }:</strong> {msg.message}
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
             <div>
+              <form onSubmit={sendMessage}>
               <input
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 style={{ width: '80%' }}
               />
-              <button onClick={sendMessage} style={{ width: '20%' }}>Send</button>
+              <button style={{ width: '20%' }}>Send</button>
+              </form>
             </div>
           </>
         ) : (

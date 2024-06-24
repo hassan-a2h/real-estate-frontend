@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import propertyImg from '../assets/img/property-1.jpg';
 import { Link } from 'react-router-dom';
 
 const Listing = ({ listings, handleDelete, userId }) => {
   const navigate = useNavigate();
 
-  const handleContact = (listing) => {
-    navigate('/chat', { state: { userId, listing } });
+  const handleContact = async (listing) => {
+    try {
+      const response = await axios.post('/api/c/chat', {
+        userId,
+        agentId: listing.postedBy,
+        listingId: listing._id,
+        propertyTitle: listing.title
+      });
+      console.log('response received:', response);
+      const chat = response.data;
+      navigate('/chat', { state: { userId, chat } });
+    } catch (error) {
+      console.error('Error creating or fetching chat:', error);
+    }
   };
 
   return (

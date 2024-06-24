@@ -14,12 +14,10 @@ const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
+  const currentChatRef = useRef(currentChat);
 
   useEffect(() => {
-    // Fetch user chats when component mounts
     fetchChats();
-
-    // Listen for incoming messages
     socket.on('receiveMessage', handleReceiveMessage);
 
     return () => {
@@ -30,6 +28,10 @@ const Chat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    currentChatRef.current = currentChat;
+  }, [currentChat]);
 
   const fetchChats = async () => {
     try {
@@ -54,15 +56,16 @@ const Chat = () => {
     e.preventDefault();
     const newMessage = {
       chatId: currentChat._id,
-      userId,
+      senderId: userId,
       message,
     };
+    // Emit the message to the server
     socket.emit('sendMessage', newMessage);
     setMessage('');
   };
 
   const handleReceiveMessage = (data) => {
-    if (data.chatId === (currentChat && currentChat._id)) {
+    if (data.chatId === currentChatRef.current?._id) {
       setMessages((prevMessages) => [...prevMessages, data]);
     }
   };
@@ -79,7 +82,7 @@ const Chat = () => {
           <div
             key={chat._id}
             onClick={() => handleChatSelect(chat)}
-            style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}
+            style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
           >
             {chat._id}
           </div>
@@ -92,21 +95,20 @@ const Chat = () => {
             <div style={{ height: '80%', overflowY: 'scroll' }}>
               {messages.map((msg, index) => (
                 <div key={index} style={{ marginBottom: '10px' }}>
-                  {console.log('message:', msg, '- userId:', userId)}
-                  <strong>{(msg?.senderId === userId || msg?.userId === userId) ? 'You' : 'Seller' }:</strong> {msg.message}
+                  <strong>{msg.senderId === userId ? 'You' : 'Received'}: </strong>{msg.message}
                 </div>
               ))}
               <div ref={messagesEndRef} />
             </div>
             <div>
               <form onSubmit={sendMessage}>
-              <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                style={{ width: '80%' }}
-              />
-              <button style={{ width: '20%' }}>Send</button>
+                <input
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  style={{ width: '80%' }}
+                />
+                <button style={{ width: '20%' }}>Send</button>
               </form>
             </div>
           </>

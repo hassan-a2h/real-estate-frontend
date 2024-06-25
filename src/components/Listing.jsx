@@ -68,9 +68,9 @@ const Listing = ({ listings, handleDelete, userId }) => {
                     </div>
                     <div className="d-flex border-top">
                       <small className="flex-fill text-center border-end py-2"><i className="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</small>
-                      <small className="flex-fill text-center border-end py-2"><Link to={`/listings/edit/${listing._id}`} className="bg-yellow-500 text-black p-2 rounded">Edit</Link></small>
-                      <span className="flex-fill text-center py-2 cursor-pointer" onClick={() => handleDelete(listing._id)}><Link className="bg-yellow-500 text-black p-2 rounded">Delete</Link></span>
-                      <button className="flex-fill text-center py-2 cursor-pointer" onClick={() => handleContact(listing)}>Contact</button>
+                      { listing.postedBy === userId && <small className="flex-fill text-center border-end py-2"><Link to={`/listings/edit/${listing._id}`} className="bg-yellow-500 text-black p-2 rounded">Edit</Link></small>}
+                      { listing.postedBy === userId && <span className="flex-fill text-center py-2 cursor-pointer" onClick={() => handleDelete(listing._id)}><Link className="bg-yellow-500 text-black p-2 rounded">Delete</Link></span>}
+                      <button className="flex-fill text-center py-2 cursor-pointer btn btn-primary" onClick={() => handleContact(listing)}>Contact</button>
                     </div>
                   </div>
                 </div>

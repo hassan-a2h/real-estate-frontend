@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from '../assets/img/icon-deal.png';
+import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
+const socket = io('http://localhost:3000');
 
 const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
   const location = useLocation();
@@ -11,8 +14,38 @@ const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
   const role = useContext(AuthContext)?.user?.role || 'user';
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
+  const [unreadMessages, setUnreadMessages] = useState(0);
+
+  useEffect(() => {
+    if (user) {
+      fetchUnreadMessages();
+    }
+
+    socket.on('receiveMessage', handleReceiveMessage);
+
+    return () => {
+      socket.off('receiveMessage', handleReceiveMessage);
+    };
+  }, [user]);
+
+  const fetchUnreadMessages = async () => {
+    try {
+      const response = await axios.get(`/api/c/unread-messages/${user}`);
+      setUnreadMessages(response.data.unreadCount);
+    } catch (error) {
+      console.error('Error fetching unread messages:', error);
+    }
+  };
+
+  const handleReceiveMessage = (message) => {
+    if (message.receiverId === user) {
+      setUnreadMessages((prevCount) => prevCount + 1);
+    }
+  };
+
 
   console.log('currently logged in user:', user);
+  console.log('unread messages', unreadMessages);
 
   return (
     <>
@@ -23,6 +56,7 @@ const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
             logout={logout}
             isLoginPage={isLoginPage}
             isRegisterPage={isRegisterPage} 
+            unreadMessages={unreadMessages}
             /> : 
             role === 'agent' ?
             <AgentNavbar 
@@ -32,18 +66,20 @@ const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
             isRegisterPage={isRegisterPage}
             setIsModalOpen={setIsModalOpen}
             isModalOpen={isModalOpen}
+            unreadMessages={unreadMessages}
             /> :
             <UserNavbar 
             user={user}
             logout={logout}
             isLoginPage={isLoginPage}
             isRegisterPage={isRegisterPage}
+            unreadMessages={unreadMessages}
             />) }
     </>
   );
 };
 
-function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
+function AdminNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages }) {
     return (
     <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
         <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
@@ -78,7 +114,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                         )}
                         <Link to='/register' className='nav-item nav-link'>Add Agent</Link>
                         <Link to="/chat" className="nav-item nav-link">
-                            Chat
+                            Chat {unreadMessages > 0 && <span className="badge badge-danger">{unreadMessages}</span>}
                         </Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
@@ -104,7 +140,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     );
 }
 
-function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
+function UserNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages }) {
     return (
         <div className="container-fluid nav-bar bg-transparent" style={{ zIndex: 1000 }}>
       <nav className="navbar navbar-expand-lg bg-white navbar-light py-0 px-4 flex justify-between">
@@ -147,7 +183,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
                             </div>
                         </div>
                         <Link to="/chat" className="nav-item nav-link">
-                            Chat
+                            Chat {unreadMessages > 0 && <span className="badge badge-danger">{unreadMessages}</span>}
                         </Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -164,7 +200,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage }) {
     );
 }
 
-function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen, isModalOpen }) {
+function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen, isModalOpen, unreadMessages }) {
     const navigate = useNavigate();
     
     function handleCustomListing() {
@@ -206,7 +242,7 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen
                         )}
                         <span className="nav-item nav-link active" style={{"cursor": "pointer"}} onClick={() => handleCustomListing()}>My Listings</span>
                         <Link to="/chat" className="nav-item nav-link">
-                          Chat
+                          Chat {unreadMessages > 0 && <span className="badge badge-danger">{unreadMessages}</span>}
                         </Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>

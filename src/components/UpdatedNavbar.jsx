@@ -4,44 +4,14 @@ import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
-const socket = io('http://localhost:3000');
 
-const UpdatedNavbar = ({ setIsModalOpen, isModalOpen }) => {
+const UpdatedNavbar = ({ setIsModalOpen, isModalOpen, unreadMessages }) => {
   const location = useLocation();
   const { logout } = useContext(AuthContext);
   const user = useContext(AuthContext)?.user?.id;
   const role = useContext(AuthContext)?.user?.role || 'user';
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
-  const [unreadMessages, setUnreadMessages] = useState(0);
-
-  useEffect(() => {
-    if (user) {
-      fetchUnreadMessages();
-    }
-
-    socket.on('receiveMessage', handleReceiveMessage);
-
-    return () => {
-      socket.off('receiveMessage', handleReceiveMessage);
-    };
-  }, [user]);
-
-  const fetchUnreadMessages = async () => {
-    try {
-      const response = await axios.get(`/api/c/unread-messages/${user}`);
-      setUnreadMessages(response.data.unreadCount);
-    } catch (error) {
-      console.error('Error fetching unread messages:', error);
-    }
-  };
-
-  const handleReceiveMessage = (message) => {
-    if (message.receiverId === user) {
-      setUnreadMessages((prevCount) => prevCount + 1);
-    }
-  };
 
 
   console.log('currently logged in user:', user);

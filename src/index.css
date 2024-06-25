@@ -92,3 +92,74 @@ form {
   text-align: center;
   margin-top: 4px;
 }
+
+
+
+
+
+.chat-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f2f2f2; /* Optional background color */
+}
+
+.chat-sidebar {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  overflow-y: auto; /* Enable scroll for long chat lists */
+}
+
+.chat-content {
+  width: 70%;
+  padding: 10px;
+  display: flex; /* Make chat content a flex container */
+  flex-direction: column; /* Arrange messages vertically */
+}
+
+.chat-list-item {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333; /* Text color */
+}
+
+.chat-history {
+  height: 80%; /* Adjust height as needed */
+  overflow-y: scroll; /* Enable scrolling for chat history */
+  padding-bottom: 10px; /* Add some padding for aesthetics */
+  padding-right: 28px;
+  flex: 1; /* Allow chat history to fill remaining space */
+}
+
+.chat-message {
+  padding: 10px;
+  border-radius: 25px;
+  margin-bottom: 5px;
+  display: inline-block; /* Allow messages to wrap next to each other */
+  position: relative; /* Needed for message timestamps (optional) */
+  width: fit-content; /* Allow messages to adjust width based on content */
+  max-width: 80%; /* Set a maximum width to prevent overflow */
+  clear: both; /* Clear any previous floats for proper positioning */
+}
+
+.chat-message-sent {
+  background-color: #00B98E;
+  color: #FAFFFF; /* Text color for sent messages */
+  border-bottom-right-radius: 0; /* Remove bottom-right border for sent messages */
+  padding-right: 10px; /* Add some padding for sent messages */
+  float: right; /* Make sent messages float to the right */
+  /* Optional: Add a right triangle after sent messages (using ::after pseudo-element) */
+}
+
+.chat-message-received {
+  background-color: #fff;
+  color: #333; /* Text color for received messages */
+  border-bottom-left-radius: 0; /* Remove bottom-left border for received messages */
+  padding-left: 10px; /* Add some padding for received messages */
+  float: left; /* Make received messages float to the left */
+  /* Optional: Add a left triangle after received messages (using ::after pseudo-element) */
+}

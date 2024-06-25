@@ -45,7 +45,9 @@ const Chat = () => {
   const handleChatSelect = async (chat) => {
     setCurrentChat(chat);
     try {
-      const response = await axios.get(`/api/c/chats/${chat._id}/messages`);
+      const response = await axios.get(`/api/c/chats/${chat._id}/messages`, {
+        params: { userId: id },
+      });
       setMessages(response.data);
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -54,9 +56,12 @@ const Chat = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    const receiverId = currentChat.userId === userId ? currentChat.agentId : currentChat.userId;
+    
     const newMessage = {
       chatId: currentChat._id,
       senderId: userId,
+      receiverId,
       message,
     };
     // Emit the message to the server

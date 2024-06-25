@@ -3,9 +3,9 @@ import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const socket = io('http://localhost:3000'); // Update with your server URL
+const socket = io('http://localhost:3000');
 
-const Chat = () => {
+const Chat = ({ unreadMessages }) => {
   const id = localStorage.getItem('userId');
   const location = useLocation();
   const { userId } = location.state || { userId: id };
@@ -36,7 +36,14 @@ const Chat = () => {
   const fetchChats = async () => {
     try {
       const response = await axios.get(`/api/c/chats/${userId}`);
-      setChats(response.data);
+      const chatsWithNames = await Promise.all(
+        response.data.map(async (chat) => {
+          const recipient = chat.userId === userId ? chat.agentId : chat.userId;
+          const recipientData = await axios.get(`/api/users/${recipient}`); // Fetch user data
+          return { ...chat, recipientName: recipientData.data.name }; // Combine chat and name
+        })
+      );
+      setChats(chatsWithNames);
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
@@ -49,6 +56,7 @@ const Chat = () => {
         params: { userId: id },
       });
       setMessages(response.data);
+      socket.emit('messagesRead', { userId: id });
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
@@ -57,7 +65,7 @@ const Chat = () => {
   const sendMessage = (e) => {
     e.preventDefault();
     const receiverId = currentChat.userId === userId ? currentChat.agentId : currentChat.userId;
-    
+
     const newMessage = {
       chatId: currentChat._id,
       senderId: userId,
@@ -67,6 +75,7 @@ const Chat = () => {
     // Emit the message to the server
     socket.emit('sendMessage', newMessage);
     setMessage('');
+    scrollToBottom();
   };
 
   const handleReceiveMessage = (data) => {
@@ -76,33 +85,49 @@ const Chat = () => {
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      const chatHistory = messagesEndRef.current.parentElement; // Get parent element (chat history)
+      const scrollHeight = chatHistory.scrollHeight; // Get total scroll height
+  
+      chatHistory.scrollTo({ top: scrollHeight, behavior: 'smooth' });
+    }
   };
 
+  console.log('Chat page, unreadMessages:', unreadMessages);
+
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ width: '30%', borderRight: '1px solid #ccc', padding: '10px' }}>
+    <div className="chat-container">
+      <div className="chat-sidebar">
         <h3>Chats</h3>
         {chats.map((chat) => (
           <div
             key={chat._id}
             onClick={() => handleChatSelect(chat)}
-            style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            className="chat-list-item"
           >
-            {chat._id}
+            {console.log('current chat id:', chat._id)}
+            {chat.recipientName}
+            {unreadMessages?.unreadChats[chat._id] && <span>({unreadMessages.unreadChats[chat._id]})</span>}
           </div>
         ))}
       </div>
-      <div style={{ width: '70%', padding: '10px' }}>
+      <div className="chat-content">
         {currentChat ? (
           <>
-            <h3>Chat with {currentChat.title}</h3>
-            <div style={{ height: '80%', overflowY: 'scroll' }}>
-              {messages.map((msg, index) => (
-                <div key={index} style={{ marginBottom: '10px' }}>
-                  <strong>{msg.senderId === userId ? 'You' : 'Received'}: </strong>{msg.message}
-                </div>
-              ))}
+            <h3>Chat History</h3>
+            
+            <div className="chat-history" style={{ height: '80%', overflowY: 'scroll' }}>
+              {messages.map((msg, index) => {
+                return msg.senderId === userId ? (
+                  <div key={index} className="chat-message chat-message-sent"> {/* Sent message styling */}
+                    {msg.message}
+                  </div>
+                ) : (
+                  <div key={index} className="chat-message chat-message-received"> {/* Received message styling */}
+                    {msg.message}
+                  </div>
+                );
+              })}
               <div ref={messagesEndRef} />
             </div>
             <div>

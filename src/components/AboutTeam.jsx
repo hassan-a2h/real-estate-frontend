@@ -16,7 +16,6 @@ const AboutTeam = () => {
       async function fetchAgents() {
         try {
             const agentsData = await axios.get('/api/users/agents');
-            console.log('agents data', agentsData);
             if (agentsData.data.length > 0) {
                 setAgents(agentsData.data);
                 setLoading(false);
@@ -32,8 +31,6 @@ const AboutTeam = () => {
       
       fetchAgents();
     }, []);
-
-    console.log('agents returned by server:', agents);
 
     //  Helper functions
     function getImage(index) {
@@ -51,7 +48,6 @@ const AboutTeam = () => {
       <div className="row g-4">
           { agents.map((agent, index) => {
             const social = agent.socialMedia[0];
-            console.log('social media:', social);
             return (
             
               <div key={agent._id} className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -59,9 +55,9 @@ const AboutTeam = () => {
                   <div className="position-relative">
                       <img className="img-fluid" src={getImage(index)} alt="" />
                       <div className="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                          <a target='_blank' className="btn btn-square mx-1" href={social?.facebookUrl}><i className="fab fa-facebook-f"></i></a>
-                          <a target='_blank' className="btn btn-square mx-1" href={social?.twitterUrl}><i className="fab fa-twitter"></i></a>
-                          <a target='_blank' className="btn btn-square mx-1" href={social?.instagramUrl}><i className="fab fa-instagram"></i></a>
+                          <a target='_blank' className="btn btn-square mx-1" href={social?.facebookUrl} rel="noreferrer"><i className="fab fa-facebook-f"></i></a>
+                          <a target='_blank' className="btn btn-square mx-1" href={social?.twitterUrl} rel="noreferrer"><i className="fab fa-twitter"></i></a>
+                          <a target='_blank' className="btn btn-square mx-1" href={social?.instagramUrl} rel="noreferrer"><i className="fab fa-instagram"></i></a>
                       </div>
                   </div>
                   <div className="text-center p-4 mt-3">

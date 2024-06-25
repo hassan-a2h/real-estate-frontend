@@ -19,7 +19,7 @@ module.exports = module.exports = {
   rules: {
     indent: ['error', 2],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-uses-react": "off"
+    "react/jsx-uses-react": "off",
   },
   overrides: [
     {

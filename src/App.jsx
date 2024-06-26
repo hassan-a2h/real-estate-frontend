@@ -39,7 +39,7 @@ function App() {
     });
 
     return () => {
-      socket.off('receiveMessage', handleReceiveMessage);
+      socket.off('receiveMessage', fetchUnreadMessages);
     };
   }, [user]);
 
@@ -50,12 +50,6 @@ function App() {
       console.log('unread messages at the moment:', unreadMessages);
     } catch (error) {
       console.error('Error fetching unread messages:', error);
-    }
-  };
-
-  const handleReceiveMessage = (message) => {
-    if (message.receiverId === user) {
-      setUnreadMessages((prevCount) => prevCount + 1);
     }
   };
 

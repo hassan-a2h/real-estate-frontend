@@ -12,6 +12,8 @@ const Chat = ({ unreadMessages }) => {
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [message, setMessage] = useState('');
+  const [lastMessage, setLastMessage] = useState({});
+  const [messageTime, setMessageTime] = useState({});
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
   const currentChatRef = useRef(currentChat);
@@ -64,7 +66,7 @@ const Chat = ({ unreadMessages }) => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    const receiverId = currentChat.userId === userId ? currentChat.agentId : currentChat.userId;
+    const receiverId = currentChat.userId === userId ? currentChat.agentId : currentChat.userId;    const sender = currentChat.userId === userId ? currentChat.agentId : currentChat.userId;
 
     const newMessage = {
       chatId: currentChat._id,
@@ -72,17 +74,49 @@ const Chat = ({ unreadMessages }) => {
       receiverId,
       message,
     };
-    // Emit the message to the server
+
+    setLastMessage({
+      ...lastMessage,
+      [currentChat._id]: message
+    });
+
+    setMessageTime({
+      ...messageTime,
+      [currentChat._id]: '' + new Date()
+    });
+
     socket.emit('sendMessage', newMessage);
     setMessage('');
     scrollToBottom();
   };
 
-  const handleReceiveMessage = (data) => {
+  const handleReceiveMessage = async (data) => {
+    console.log('received message:', data);
     if (data.chatId === currentChatRef.current?._id) {
       setMessages((prevMessages) => [...prevMessages, data]);
+      if (data.receiverId === id) {
+        const savedMsg = await axios.post(`/api/c/messages/read`, 
+          {
+            id: data._id
+          }
+        );
+        console.log('saved:', savedMsg);
+      }
+      socket.emit('messagesRead', { userId: id });
     }
+
+    setLastMessage({
+      ...lastMessage,
+      [data.chatId]: data.message
+    });
+
+    setMessageTime({
+      ...messageTime,
+      [data.chatId]: '' + data.createdAt
+    });
   };
+
+  console.log('Date for each message:', messageTime);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -105,9 +139,22 @@ const Chat = ({ unreadMessages }) => {
             onClick={() => handleChatSelect(chat)}
             className="chat-list-item"
           >
-            {console.log('current chat id:', chat._id)}
-            {chat.recipientName}
-            {unreadMessages?.unreadChats[chat._id] && <span>({unreadMessages.unreadChats[chat._id]})</span>}
+            <div className='chat-name-container'>
+              <span className='chat-recipient-name'>{chat?.recipientName}</span>
+              <span>
+              <span className='last-message-date'>
+                {chat?.lastMessage?.createdAt.split('T')[1].slice(0, 5).replace('.', ':')}
+                </span>
+                {unreadMessages?.unreadChats[chat._id] && <span className="badge badge-pill badge-secondary">{unreadMessages.unreadChats[chat._id]}</span>}
+                </span>
+            </div>
+
+            <div>
+              {lastMessage[chat._id] ? 
+              <span className='chat-last-message'>{lastMessage[chat._id]}</span> : 
+              <span className='chat-last-message'>{chat.lastMessage.message}</span>
+              }
+            </div>
           </div>
         ))}
       </div>

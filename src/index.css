@@ -127,6 +127,33 @@ form {
   color: #333; /* Text color */
 }
 
+.chat-recipient-name, .chat-last-message {
+  font-weight: 900;
+  font-size: large;
+  width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-last-message, .last-message-date {
+  font-weight: 100;
+  font-size: smaller;
+  width: 80%;
+}
+
+.last-message-date {
+  margin-right: 8px;
+  max-width: 30%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-name-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .chat-history {
   height: 80%; /* Adjust height as needed */
   overflow-y: scroll; /* Enable scrolling for chat history */

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import localTime from '../utils/localDateTime.js';
 
 const socket = io('http://localhost:3000');
 
@@ -82,7 +83,7 @@ const Chat = ({ unreadMessages }) => {
 
     setMessageTime({
       ...messageTime,
-      [currentChat._id]: '' + new Date()
+      [currentChat._id]: new Date()
     });
 
     socket.emit('sendMessage', newMessage);
@@ -100,7 +101,6 @@ const Chat = ({ unreadMessages }) => {
             id: data._id
           }
         );
-        console.log('saved:', savedMsg);
       }
       socket.emit('messagesRead', { userId: id });
     }
@@ -112,7 +112,7 @@ const Chat = ({ unreadMessages }) => {
 
     setMessageTime({
       ...messageTime,
-      [data.chatId]: '' + data.createdAt
+      [data.chatId]: data.createdAt
     });
   };
 
@@ -143,7 +143,10 @@ const Chat = ({ unreadMessages }) => {
               <span className='chat-recipient-name'>{chat?.recipientName}</span>
               <span>
               <span className='last-message-date'>
-                {chat?.lastMessage?.createdAt.split('T')[1].slice(0, 5).replace('.', ':')}
+                
+                {messageTime[chat._id] && <span>{localTime(messageTime[chat._id])?.split('T')[1].slice(0, 5).replace('.', ':')}</span>} 
+                  {!messageTime[chat._id] && <span>{localTime(chat?.lastMessage?.createdAt)?.split('T')[1].slice(0, 5).replace('.', ':')}</span>}
+                
                 </span>
                 {unreadMessages?.unreadChats[chat._id] && <span className="badge badge-pill badge-secondary">{unreadMessages.unreadChats[chat._id]}</span>}
                 </span>

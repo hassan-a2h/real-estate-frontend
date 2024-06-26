@@ -17,7 +17,7 @@ const Listing = ({ listings, handleDelete, userId }) => {
       });
       console.log('response received:', response);
       const chat = response.data;
-      navigate('/chat', { state: { userId, chat } });
+      navigate('/chat', { state: { userId, chatFromListing: chat } });
     } catch (error) {
       console.error('Error creating or fetching chat:', error);
     }

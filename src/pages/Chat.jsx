@@ -9,7 +9,7 @@ const socket = io('http://localhost:3000');
 const Chat = ({ unreadMessages }) => {
   const id = localStorage.getItem('userId');
   const location = useLocation();
-  const { userId } = location.state || { userId: id };
+  const { userId, chatFromListing } = location.state || { userId: id };
   const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [message, setMessage] = useState('');
@@ -21,6 +21,11 @@ const Chat = ({ unreadMessages }) => {
 
   useEffect(() => {
     fetchChats();
+    
+    if (chatFromListing) {
+      handleChatSelect(chatFromListing);
+    }
+
     socket.on('receiveMessage', handleReceiveMessage);
 
     return () => {

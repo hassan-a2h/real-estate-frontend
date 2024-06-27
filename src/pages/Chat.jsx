@@ -16,6 +16,10 @@ const Chat = ({ unreadMessages }) => {
   const [lastMessage, setLastMessage] = useState({});
   const [messageTime, setMessageTime] = useState({});
   const [messages, setMessages] = useState([]);
+
+  const [titleMessages, setTitleMessages] = useState({});
+  // Title messages are just properties which user clicked to start chat
+
   const messagesEndRef = useRef(null);
   const currentChatRef = useRef(currentChat);
 
@@ -54,6 +58,16 @@ const Chat = ({ unreadMessages }) => {
       setChats(chatsWithNames);
     } catch (error) {
       console.error('Error fetching chats:', error);
+    }
+  };
+
+  const fetchTitleMessages = async (id) => {
+    try {
+      const response = await axios.get(`/api/listings/${id}`);
+
+      setTitleMessages({ ...titleMessages, [id]: response.data });
+    } catch (error) {
+      console.error('Error fetching title messages:', error);
     }
   };
 
@@ -142,7 +156,7 @@ const Chat = ({ unreadMessages }) => {
           <div
             key={chat._id}
             onClick={() => handleChatSelect(chat)}
-            className="chat-list-item"
+            className={`chat-list-item ${ chat?._id === currentChat?._id ? 'chat-selected' : ''}`}
           >
             <div className='chat-name-container'>
               <span className='chat-recipient-name'>{chat?.recipientName}</span>
@@ -169,10 +183,35 @@ const Chat = ({ unreadMessages }) => {
       <div className="chat-content">
         {currentChat ? (
           <>
-            <h3>Chat History</h3>
+            <h3>Messages</h3>
             
             <div className="chat-history" style={{ height: '80%', overflowY: 'scroll' }}>
               {messages.map((msg, index) => {
+                if (msg.isPropertyTitle) {
+                  if (!titleMessages?.[msg.message]) {
+                    fetchTitleMessages(msg.message);
+                  }
+
+                  console.log('tile messages:', titleMessages, 'current id:', msg.message);
+
+                  return (
+                    <>
+                      {(titleMessages[msg.message] !== undefined ?
+                        <div className="property-details">
+                        <h2 className="property-title">{titleMessages[msg.message].title}</h2>
+                        <p className="property-description">{titleMessages[msg.message].description}</p>
+                        <div className="property-info">
+                          <span className="property-price">{titleMessages[msg.message].price}</span> - <span className="property-location">{titleMessages[msg.message].location}</span>
+                        </div>
+                      </div> : 
+                        <div className="property-details placeholder">
+                        <h2>Loading...</h2>
+                        <p>&nbsp;</p> <div className="property-info">
+                          <span>&nbsp;</span> - <span>&nbsp;</span> </div>
+                      </div>)}
+                    </>
+                  );
+                }
                 return msg.senderId === userId ? (
                   <div key={index} className="chat-message chat-message-sent"> {/* Sent message styling */}
                     {msg.message}

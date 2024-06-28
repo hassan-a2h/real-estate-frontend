@@ -30,7 +30,7 @@ const Register = () => {
       if (role === 'admin') {
         await register(name, email, password, newUserRole);
         toast.success('New agent added');
-        navigate('/listings');
+        navigate('/');
         return;
       }
       await register(name, email, password);

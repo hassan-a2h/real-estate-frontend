@@ -7,8 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Navbar from './components/UpdatedNavbar';
-import Listings from './pages/Listings';
+import Navbar from './components/Navbar';
 import CustomListings from './pages/CustomListings';
 import ListingForm from './components/ListingForm';
 import { ToastContainer } from 'react-toastify';
@@ -76,7 +75,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
-            <Route path="/listings" element={<Listings />} />
             <Route path="/listings/new" element={<ListingForm />} />
             <Route path="/listings/edit/:id" element={<ListingForm editing />} />
             <Route path="/listings/:type/:value" element={<CustomListings />} />

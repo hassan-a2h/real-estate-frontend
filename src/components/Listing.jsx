@@ -15,7 +15,7 @@ const Listing = ({ listings, handleDelete, userId }) => {
         listingId: listing._id,
         propertyTitle: listing.title
       });
-      console.log('response received:', response);
+      
       const chat = response.data;
       navigate('/chat', { state: { userId, chatFromListing: chat } });
     } catch (error) {

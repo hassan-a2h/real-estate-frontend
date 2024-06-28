@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
 import SocialModal from './components/SocialModal';
-import Chat from './pages/Chat';
+import Chat from './pages/Chat/Chat';
 import io from 'socket.io-client';
 const socket = io('http://localhost:3000');
 

@@ -1,3 +1,4 @@
+
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
@@ -105,7 +106,7 @@ form {
 
 .chat-sidebar {
   width: 30%;
-  background-color: #f5f5f5; /* Optional background color */
+  background-color: #fcfcfc; /* Optional background color */
   padding: 10px;
   overflow-y: auto; /* Enable scroll for long chat lists */
 }
@@ -154,8 +155,8 @@ form {
 }
 
 .chat-selected {
-  background-color: rgb(220, 220, 220);
-  border-radius: 4px;
+  background-color: #dfffed;
+  border-radius: 20px;
 }
 
 .chat-history {
@@ -164,9 +165,11 @@ form {
   padding-bottom: 10px; /* Add some padding for aesthetics */
   padding-right: 28px;
   flex: 1; /* Allow chat history to fill remaining space */
+  rotate: 180deg;
 }
 
 .chat-message {
+  rotate: 180deg;
   padding: 10px;
   border-radius: 25px;
   margin-bottom: 5px;
@@ -175,23 +178,25 @@ form {
   width: fit-content; /* Allow messages to adjust width based on content */
   max-width: 80%; /* Set a maximum width to prevent overflow */
   clear: both; /* Clear any previous floats for proper positioning */
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.02);
 }
 
 .chat-message-sent {
-  background-color: #00B98E;
-  color: #FAFFFF; /* Text color for sent messages */
+  background-color: #EFFDF5;
+  color: #0b141d; /* Text color for sent messages */
   border-bottom-right-radius: 0; /* Remove bottom-right border for sent messages */
   padding-right: 10px; /* Add some padding for sent messages */
-  float: right; /* Make sent messages float to the right */
+  float: left; /* Make sent messages float to the right */
   /* Optional: Add a right triangle after sent messages (using ::after pseudo-element) */
 }
 
 .chat-message-received {
-  background-color: #fff;
+  margin-left: 10px;
+  background-color: #f7f7f7;
   color: #333; /* Text color for received messages */
   border-bottom-left-radius: 0; /* Remove bottom-left border for received messages */
   padding-left: 10px; /* Add some padding for received messages */
-  float: left; /* Make received messages float to the left */
+  float: right; /* Make received messages float to the left */
   /* Optional: Add a left triangle after received messages (using ::after pseudo-element) */
 }
 
@@ -203,7 +208,17 @@ form {
   box-shadow: 0 2px 4px #00B98E66;
   padding: 16px;
   margin-bottom: 16px;
-  float: right;
+  float: left;
+  display: block;
+  rotate: 180deg;
+}
+
+.message-timestamp {
+  font-size: 8px;
+  margin-left: 5px;
+  padding: 2px 4px;
+  border-radius: 10px;
+  /* background-color: rgba(0, 0, 0, 0.05); */
 }
 
 .property-details.placeholder {
@@ -234,5 +249,10 @@ form {
 
 .property-location {
   font-weight: bold;
+}
+
+.message-form {
+  background-color: #e2f0fd;
+  box-shadow: none;
 }
 

@@ -159,19 +159,10 @@ form {
   border-radius: 20px;
 }
 
-.chat-history {
-  height: 80%; /* Adjust height as needed */
-  overflow-y: scroll; /* Enable scrolling for chat history */
-  padding-bottom: 10px; /* Add some padding for aesthetics */
-  padding-right: 28px;
-  flex: 1; /* Allow chat history to fill remaining space */
-  rotate: 180deg;
-}
-
 .chat-message {
   rotate: 180deg;
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 10px;
   margin-bottom: 5px;
   display: inline-block; /* Allow messages to wrap next to each other */
   position: relative; /* Needed for message timestamps (optional) */
@@ -188,6 +179,22 @@ form {
   padding-right: 10px; /* Add some padding for sent messages */
   float: left; /* Make sent messages float to the right */
   /* Optional: Add a right triangle after sent messages (using ::after pseudo-element) */
+}
+
+.chat-history-wrapper {
+  overflow-y: scroll;
+  flex: 1;
+  overflow-y: scroll !important;
+}
+
+.chat-history {
+  height: 100%; /* Adjust height as needed */
+  /* overflow-y: scroll; Enable scrolling for chat history */
+  padding-bottom: 10px; /* Add some padding for aesthetics */
+  padding-right: 28px;
+  /* flex: 1; Allow chat history to fill remaining space */
+  rotate: 180deg;
+  overflow-y: auto;
 }
 
 .chat-message-received {

@@ -10,9 +10,7 @@ const MessageList = ({ messages, userId, titleMessages, fetchTitleMessages, mess
     if (observerRef.current) observerRef.current.disconnect();
     observerRef.current = new IntersectionObserver(entries => {
       if (entries[entries.length - 1].isIntersecting && hasMore) {
-        if (entries[entries.length - 1].isVisible) {
-          loadMoreMessages();
-        }
+        loadMoreMessages();
       }
     });
     if (node) observerRef.current.observe(node);

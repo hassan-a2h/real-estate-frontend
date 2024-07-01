@@ -47,17 +47,28 @@ const Chat = ({ unreadMessages }) => {
         })
       );
       setChats(chatsWithNames);
+      
+      if (chatsWithNames.length > 0) {
+        setCurrentChat(chatsWithNames[0]);
+      }
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
   };
 
   const handleChatSelect = async (chat) => {
-    setCurrentChat(chat);
+    setCurrentChat(() => chat);
   };
 
   const handleReceiveMessage = async (data) => {
     if (data.chatId === currentChatRef.current?._id) {
+      if (data.receiverId === id) {
+        const savedMsg = await axios.post(`/api/c/messages/read`, 
+          {
+            id: data._id
+          }
+        );
+      }
       socket.emit('messagesRead', { userId: id });
     }
 

@@ -6,8 +6,6 @@ function convertToKarachiTime(dateString, options = {}) {
   const karachiMoment = utcMoment.tz("Asia/Karachi");
   const formattedKarachiTime = karachiMoment.format();
 
-  console.log('karachi formatted time:', formattedKarachiTime);
-  
   if (options?.onlyHours) {
     return formattedKarachiTime?.split('T')[1].slice(0, 5).replace('.', ':');
   }
@@ -27,7 +25,7 @@ function convertToKarachiTime(dateString, options = {}) {
     return finalDate + ` ${unit} ago`;
   } else if (currentMonth != messageMonth) {
     finalDate += Number(currentMonth) - Number(messageMonth);
-    const unit = +finalDate > 1 ? 'months' : 'year';
+    const unit = +finalDate > 1 ? 'months' : 'month';
     return finalDate + ` ${unit} ago`;
   } else if (currentDay != messageDay) {
     finalDate += Number(currentDay) - Number(messageDay);

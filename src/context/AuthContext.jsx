@@ -36,7 +36,6 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('role', data.role);
       localStorage.setItem('userId', data._id);
       setUser({ id: data._id, role: data.role });
-      console.log('Hello I am here');
       toast.success('Login successful');
     } catch (error) {
       toast.error('Invalid credentials');

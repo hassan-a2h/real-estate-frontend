@@ -13,10 +13,6 @@ const UpdatedNavbar = ({ setIsModalOpen, isModalOpen, unreadMessages }) => {
   const isLoginPage = location.pathname === '/login';
   const isRegisterPage = location.pathname === '/register';
 
-
-  console.log('currently logged in user:', user);
-  console.log('unread messages', unreadMessages);
-
   return (
     <>
       { 

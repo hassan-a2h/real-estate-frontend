@@ -7,6 +7,7 @@ import Listing from '../components/Listing';
 function CustomListings() {
   const [filteredListings, setFilteredListings] = useState([]);
   const { type, value } = useParams();
+  const userId = localStorage.getItem('userId');
   
   useEffect(() => {
     fetchListings(value);
@@ -44,7 +45,7 @@ function CustomListings() {
   };
 
   return (
-    <Listing listings={filteredListings} handleDelete={handleDelete}/>
+    <Listing listings={filteredListings} handleDelete={handleDelete} userId={userId}/>
   );
 }
 

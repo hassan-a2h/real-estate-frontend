@@ -49,11 +49,12 @@ const ListingForm = ({ editing }) => {
       if (editing) {
         await axios.put(`/api/listings/${id}`, listing);
         toast.success('Listing updated successfully.');
+        navigate(`/listings/agent/${user}`);
       } else {
         await axios.post('/api/listings', listing);
         toast.success('Listing created successfully.');
       }
-      navigate('/listings');
+      navigate('/');
     } catch (error) {
       console.error('Error saving listing:', error);
       const errors = error?.response?.data?.errors;

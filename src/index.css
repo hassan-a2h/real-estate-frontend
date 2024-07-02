@@ -100,7 +100,7 @@ form {
 
 .chat-container {
   display: flex;
-  height: 100vh;
+  height: 85vh;
   background-color: #ffffff; /* Optional background color */
 }
 

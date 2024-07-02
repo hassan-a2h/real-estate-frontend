@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Listing from '../components/Listing';
+import { AuthContext } from '../context/AuthContext';
 
 function CustomListings() {
   const [filteredListings, setFilteredListings] = useState([]);

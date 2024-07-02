@@ -139,7 +139,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages 
                             )}
                             </>
                         )}
-                        <a href="index.html" className="nav-item nav-link active">Home</a>
+                        <Link to="/" className="nav-item nav-link active">Home</Link>
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">

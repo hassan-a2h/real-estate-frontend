@@ -5,7 +5,6 @@ import SearchFilter from '../components/SearchFilter';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
 import Listing from '../components/Listing';
 import Categories from '../components/Categories';
 import About from '../components/About';
@@ -36,7 +35,12 @@ const Home = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, postedBy) => {
+    if ((user.role !== 'admin' || user.role !== 'agent') && postedBy !== user.id) {
+      console.log('Can\'t delete other user\'s listing');
+      return;
+    }
+
     try {
       await axios.delete(`/api/listings/${id}`);
       fetchListings();
@@ -49,7 +53,6 @@ const Home = () => {
 
   return (
     <div className="container bg-white p-0">
-      <ToastContainer />
       <Header />
       <SearchFilter 
         listings={listings}

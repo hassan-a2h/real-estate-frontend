@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { toast, ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -42,7 +41,6 @@ const Register = () => {
 
   return (
     <div className="login-form">
-      <ToastContainer />
       <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
         <h2 className="mb-4 text-xl font-bold">Register</h2>
         <div className="mb-4">

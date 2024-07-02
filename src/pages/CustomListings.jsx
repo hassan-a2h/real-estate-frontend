@@ -7,6 +7,7 @@ import Listing from '../components/Listing';
 function CustomListings() {
   const [filteredListings, setFilteredListings] = useState([]);
   const { type, value } = useParams();
+  const { user } = useContext(AuthContext);
   const userId = localStorage.getItem('userId');
   
   useEffect(() => {
@@ -33,7 +34,12 @@ function CustomListings() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, postedBy) => {
+    if ((user.role !== 'admin' || user.role !== 'agent') && postedBy !== user.id) {
+      console.log('Can\'t delete other user\'s listing');
+      return;
+    }
+
     try {
       await axios.delete(`/api/listings/${id}`);
       fetchListings();

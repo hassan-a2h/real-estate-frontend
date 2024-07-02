@@ -1,43 +1,65 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import localTime from '../../utils/localDateTime.js';
 
-const MessageList = ({ messages, userId, titleMessages, fetchTitleMessages, messagesEndRef, loadMoreMessages, isLoading, hasMore }) => {
+const MessageList = ({ messages, userId, titleMessages, fetchTitleMessages, loadMoreMessages, isLoading, hasMore }) => {
   const listRef = useRef(null);
   const observerRef = useRef(null);
+  const sentinelRef = useRef(null);
 
-  const topMessageRef = useCallback(node => {
-    if (isLoading) return;
+  const handleObserver = useCallback((entries) => {
+    const [entry] = entries;
+    if (entry.isIntersecting && hasMore && !isLoading) {
+      loadMoreMessages();
+    }
+  }, [hasMore, isLoading, loadMoreMessages]);
+
+  useEffect(() => {
     if (observerRef.current) observerRef.current.disconnect();
-    observerRef.current = new IntersectionObserver(entries => {
-      if (entries[entries.length - 1].isIntersecting && hasMore) {
-        loadMoreMessages();
-      }
-    });
-    if (node) observerRef.current.observe(node);
-  }, [isLoading, hasMore, loadMoreMessages]);
+    observerRef.current = new IntersectionObserver(handleObserver, { threshold: 0 });
+    if (sentinelRef.current) observerRef.current.observe(sentinelRef.current);
+    return () => observerRef.current.disconnect();
+  }, [handleObserver]);
+
+  const handleScroll = useCallback(() => {
+    const listNode = listRef.current;
+    const scrollBottom = listNode.scrollHeight - listNode.scrollTop - listNode.clientHeight;
+    if (scrollBottom < 100 && hasMore && !isLoading) {  // Load more when within 100px of bottom
+      loadMoreMessages();
+    }
+  }, [hasMore, isLoading, loadMoreMessages]);
+
+  useEffect(() => {
+    const listNode = listRef.current;
+    listNode.addEventListener('scroll', handleScroll);
+    return () => listNode.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   return (
-    <div ref={listRef} className='chat-history-wrapper' style={{ height: '80%', overflowY: 'scroll' }}>
+    <div ref={listRef} className='chat-history-wrapper' style={{ height: '80%', overflowY: 'scroll', position: 'relative' }}>
       {isLoading && <div>Loading...</div>}
       <div className="chat-history">
         {messages.map((msg, index) => {
           if (index === messages.length - 1) {
-            {console.log('messge index:', index, 'messages length:', messages.length - 1)}
             return (
-              <div ref={topMessageRef} key={msg._id || index}>
-                {renderMessage(msg, index, userId, titleMessages, fetchTitleMessages)}
-              </div>
-            );
+              <React.Fragment key={msg._id || index}>
+                {renderMessage(msg, index, userId, titleMessages, fetchTitleMessages, true, sentinelRef)}
+                
+              </React.Fragment>
+            )
           }
-          return renderMessage(msg, index, userId, titleMessages, fetchTitleMessages);
+
+          return (
+            <React.Fragment key={msg._id || index}>
+              {renderMessage(msg, index, userId, titleMessages, fetchTitleMessages)}
+            </React.Fragment>
+          );
         })}
-        <div ref={messagesEndRef} />
       </div>
     </div>
   );
 };
 
-const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages) => {
+const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages, isLast, sentinelRef) => {
   if (msg.isPropertyTitle) {
     if (!titleMessages?.[msg.message]) {
       fetchTitleMessages(msg.message);
@@ -53,6 +75,7 @@ const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages) =>
               <span className="property-price">{titleMessages[msg.message].price}</span> - 
               <span className="property-location">{titleMessages[msg.message].location}</span>
             </div>
+            {isLast && <div style={{ height: '1px', width: '100%', position: 'absolute', bottom: 0 }}><div ref={sentinelRef} style={{ height: '1px' }} /></div>}
           </div>
         ) : (
           <div className="property-details placeholder">
@@ -61,6 +84,7 @@ const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages) =>
             <div className="property-info">
               <span>&nbsp;</span> - <span>&nbsp;</span>
             </div>
+            {isLast && <div style={{ height: '1px', width: '100%', position: 'absolute', bottom: 0 }}><div ref={sentinelRef} style={{ height: '1px' }} /></div>}
           </div>
         )}
       </React.Fragment>
@@ -70,6 +94,7 @@ const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages) =>
     <div key={msg._id || index} className={`chat-message ${msg.senderId === userId ? 'chat-message-sent' : 'chat-message-received'}`}>
       {msg.message}
       <span className="message-timestamp">{localTime(msg.createdAt)}</span>
+      {isLast && <div style={{ height: '1px', width: '100%', position: 'absolute', bottom: 0 }}><div ref={sentinelRef} style={{ height: '1px' }} /></div>}
     </div>
   );
 };

@@ -12,7 +12,6 @@ const ChatContent = ({ currentChat, userId, socket }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const id = localStorage.getItem('userId');
-  const messagesEndRef = useRef(null);
   const currentChatRef = useRef(currentChat);
 
   useEffect(() => {
@@ -34,10 +33,6 @@ const ChatContent = ({ currentChat, userId, socket }) => {
       fetchMessages();
     }
   }, [currentChat]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const handleReceiveMessage = async (data) => {
     if (data.chatId === currentChatRef.current?._id) {
@@ -104,10 +99,6 @@ const ChatContent = ({ currentChat, userId, socket }) => {
     setMessages(prev => [newMessage, ...prev]);
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div className="chat-content">
       {currentChat ? (
@@ -118,7 +109,6 @@ const ChatContent = ({ currentChat, userId, socket }) => {
             userId={userId}
             titleMessages={titleMessages}
             fetchTitleMessages={fetchTitleMessages}
-            messagesEndRef={messagesEndRef}
             loadMoreMessages={loadMoreMessages}
             isLoading={isLoading}
             hasMore={hasMore}

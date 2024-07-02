@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useInRouterContext, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../context/AuthContext';
 
@@ -30,6 +30,11 @@ const ListingForm = ({ editing }) => {
   const fetchListing = async (id) => {
     try {
       const response = await axios.get(`/api/listings/${id}`);
+      console.log('listing received from server:', response.data, '\nuserId:', user);
+      if (response.data.postedBy !== user.id) {
+        navigate('/');
+        return;
+      }
       setListing(response.data);
     } catch (error) {
       console.error('Error fetching listing:', error);

@@ -5,6 +5,7 @@ const MessageList = ({ messages, userId, titleMessages, fetchTitleMessages, load
   const listRef = useRef(null);
   const observerRef = useRef(null);
   const sentinelRef = useRef(null);
+  const containerRef = useRef(null);
 
   const handleObserver = useCallback((entries) => {
     const [entry] = entries;
@@ -20,24 +21,25 @@ const MessageList = ({ messages, userId, titleMessages, fetchTitleMessages, load
     return () => observerRef.current.disconnect();
   }, [handleObserver]);
 
-  const handleScroll = useCallback(() => {
-    const listNode = listRef.current;
-    const scrollBottom = listNode.scrollHeight - listNode.scrollTop - listNode.clientHeight;
-    if (scrollBottom < 100 && hasMore && !isLoading) {  // Load more when within 100px of bottom
-      loadMoreMessages();
-    }
-  }, [hasMore, isLoading, loadMoreMessages]);
-
   useEffect(() => {
-    const listNode = listRef.current;
-    listNode.addEventListener('scroll', handleScroll);
-    return () => listNode.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+    const container = containerRef.current;
+
+    const handleWheel = (event) => {
+      event.preventDefault();
+      // Invert the scroll direction
+      container.scrollTop -= event.deltaY;
+    };
+    container.addEventListener('wheel', handleWheel);
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   return (
     <div ref={listRef} className='chat-history-wrapper' style={{ height: '80%', overflowY: 'scroll', position: 'relative' }}>
       {isLoading && <div>Loading...</div>}
-      <div className="chat-history">
+      <div className="chat-history" ref={containerRef}>
         {messages.map((msg, index) => {
           if (index === messages.length - 1) {
             return (

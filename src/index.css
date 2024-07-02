@@ -170,6 +170,7 @@ form {
   max-width: 80%; /* Set a maximum width to prevent overflow */
   clear: both; /* Clear any previous floats for proper positioning */
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.02);
+  direction: ltr;
 }
 
 .chat-message-sent {
@@ -191,10 +192,11 @@ form {
   height: 100%; /* Adjust height as needed */
   /* overflow-y: scroll; Enable scrolling for chat history */
   padding-bottom: 10px; /* Add some padding for aesthetics */
-  padding-right: 28px;
+  padding: 0 28px;
   /* flex: 1; Allow chat history to fill remaining space */
   rotate: 180deg;
   overflow-y: auto;
+  direction: rtl;
 }
 
 .chat-message-received {

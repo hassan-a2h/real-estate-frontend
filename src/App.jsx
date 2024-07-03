@@ -15,6 +15,7 @@ import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
 import SocialModal from './components/SocialModal';
 import Chat from './pages/Chat/Chat';
+import NotFound from './pages/404';
 import io from 'socket.io-client';
 const socket = io('http://localhost:3000');
 
@@ -64,12 +65,15 @@ function App() {
             />
           </div>
         </Modal>
+
         <Navbar 
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
         unreadMessages={unreadMessages?.unreadCount}
         />
+
         <ToastContainer />
+        
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -79,6 +83,7 @@ function App() {
             <Route path="/listings/edit/:id" element={<ListingForm editing />} />
             <Route path="/listings/:type/:value" element={<CustomListings />} />
             <Route path="/chat" element={<Chat unreadMessages={unreadMessages}/>} />
+            <Route path="*" element={<NotFound />}/>
           </Route>
         </Routes>
       </AuthProvider>

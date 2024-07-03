@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SocialModal from './components/SocialModal';
 import Chat from './pages/Chat/Chat';
 import NotFound from './pages/404';
+import ErrorBoundary from './pages/Error';
 import io from 'socket.io-client';
 const socket = io('http://localhost:3000');
 
@@ -55,6 +56,7 @@ function App() {
 
   return (
     <Router>
+      <ErrorBoundary>
       <AuthProvider>
           <Modal isOpen={isModalOpen}>
           <button onClick={() => setIsModalOpen(false)}>x</button>
@@ -73,7 +75,7 @@ function App() {
         />
 
         <ToastContainer />
-        
+
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -87,6 +89,7 @@ function App() {
           </Route>
         </Routes>
       </AuthProvider>
+      </ErrorBoundary>
     </Router>
   );
 }

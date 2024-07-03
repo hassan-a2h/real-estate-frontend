@@ -86,8 +86,8 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
                                 <a href="/#listings" className="dropdown-item">Property List</a>
-                                <a href="property-type.html" className="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" className="dropdown-item">Property Agent</a>
+                                <a href="/#property-categories" className="dropdown-item">Property Type</a>
+                                <a href="/#property-agents" className="dropdown-item">Property Agent</a>
                             </div>
                         </div>
                         <div className="nav-item dropdown">
@@ -144,8 +144,8 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages 
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
                                 <a href="/#listings" className="dropdown-item">Property List</a>
-                                <a href="property-type.html" className="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" className="dropdown-item">Property Agent</a>
+                                <a href="/#property-categories" className="dropdown-item">Property Type</a>
+                                <a href="/#property-agents" className="dropdown-item">Property Agent</a>
                             </div>
                         </div>
                         <Link to="/chat" className="nav-item nav-link">
@@ -214,8 +214,8 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
                                 <a href="/#listings" className="dropdown-item">Property List</a>
-                                <a href="property-type.html" className="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" className="dropdown-item">Property Agent</a>
+                                <a href="/#property-categories" className="dropdown-item">Property Type</a>
+                                <a href="/#property-agents" className="dropdown-item">Property Agent</a>
                             </div>
                         </div>
                         <div className="nav-item dropdown">

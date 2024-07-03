@@ -38,7 +38,7 @@ const AboutTeam = () => {
         return images[index % 4 | 0];
     }
 
-  return (        <div className="container-xxl py-5">
+  return (        <div className="container-xxl py-5" id='property-agents'>
     { loading && <div>Loading Agents...</div>}
   { !loading && <div className="container">
       <div className="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style={{"maxWidth": "600px"}}>

@@ -49,7 +49,7 @@ const ChatContent = ({ currentChat, userId, socket }) => {
   }
 
   const fetchMessages = async (lastMessageDate = null) => {
-    if (isLoading || !hasMore) return;
+    if (isLoading) return;
 
     setIsLoading(true);
     try {

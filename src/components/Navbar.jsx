@@ -85,7 +85,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" className="dropdown-item">Property List</a>
+                                <a href="/#listings" className="dropdown-item">Property List</a>
                                 <a href="property-type.html" className="dropdown-item">Property Type</a>
                                 <a href="property-agent.html" className="dropdown-item">Property Agent</a>
                             </div>
@@ -93,7 +93,7 @@ function AdminNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" className="dropdown-item">Testimonial</a>
+                                <a href="/#testimonials" className="dropdown-item">Testimonial</a>
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages 
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" className="dropdown-item">Property List</a>
+                                <a href="/#listings" className="dropdown-item">Property List</a>
                                 <a href="property-type.html" className="dropdown-item">Property Type</a>
                                 <a href="property-agent.html" className="dropdown-item">Property Agent</a>
                             </div>
@@ -154,7 +154,7 @@ function UserNavbar({ user, logout, isLoginPage, isRegisterPage, unreadMessages 
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" className="dropdown-item">Testimonial</a>
+                                <a href="/#testimonials" className="dropdown-item">Testimonial</a>
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>
@@ -213,7 +213,7 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" className="dropdown-item">Property List</a>
+                                <a href="/#listings" className="dropdown-item">Property List</a>
                                 <a href="property-type.html" className="dropdown-item">Property Type</a>
                                 <a href="property-agent.html" className="dropdown-item">Property Agent</a>
                             </div>
@@ -221,7 +221,7 @@ function AgentNavbar({ user, logout, isLoginPage, isRegisterPage, setIsModalOpen
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div className="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" className="dropdown-item">Testimonial</a>
+                                <a href="/#testimonials" className="dropdown-item">Testimonial</a>
                                 <a href="404.html" className="dropdown-item">404 Error</a>
                             </div>
                         </div>

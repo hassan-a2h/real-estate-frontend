@@ -216,8 +216,8 @@ form {
   border-radius: 8px;
   box-shadow: 0 2px 4px #00B98E66;
   padding: 16px;
-  margin-bottom: 16px;
-  float: left;
+  margin: 20px 0;
+  float: right !important; 
   display: block;
   rotate: 180deg;
 }

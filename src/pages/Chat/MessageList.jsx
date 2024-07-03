@@ -70,7 +70,7 @@ const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages, is
     return (
       <React.Fragment key={index}>
         {titleMessages[msg.message] !== undefined ? (
-          <div className="property-details">
+          <div className="property-details chat-message">
             <h2 className="property-title">{titleMessages[msg.message].title}</h2>
             <p className="property-description">{titleMessages[msg.message].description}</p>
             <div className="property-info">

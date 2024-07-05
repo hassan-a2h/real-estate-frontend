@@ -4,7 +4,7 @@ import MessageList from './MessageList';
 import MessageForm from './MessageForm';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3000');
+const socket = io('http://192.168.10.91:3000');
 
 const ChatContent = ({ currentChat, userId, socket }) => {
   const [messages, setMessages] = useState([]);

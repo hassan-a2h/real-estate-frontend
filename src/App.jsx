@@ -18,7 +18,10 @@ import Chat from './pages/Chat/Chat';
 import NotFound from './pages/404';
 import ErrorBoundary from './pages/Error';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000');
+
+const socket = io(window.location.origin, {
+  transports: ['websocket']
+});
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);

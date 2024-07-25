@@ -1,12 +1,36 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+import globals from "globals"; // Assuming you have a module providing browser globals
 
+export default {
+  // Move parserOptions to languageOptions
+  languageOptions: {
+    parserOptions: {
+      ecmaVersion: 12,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
 
-export default [
-  {files: ["**/*.{js,mjs,cjs,jsx}"]},
-  { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
-  {languageOptions: { globals: globals.browser }},
-  pluginJs.configs.recommended,
-  pluginReactConfig,
-];
+  // ... other ESLint configuration options (extends, rules, overrides, fix)
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  rules: {
+    indent: ['error', 2],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+  },
+  overrides: [
+    {
+      files: ['*.js', '*.jsx'],
+      rules: {
+        indent: ['error', 2],
+      },
+    },
+  ],
+  fix: true, // Enable auto-fixing (optional)
+};

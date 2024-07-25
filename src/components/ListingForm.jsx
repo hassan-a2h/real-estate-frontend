@@ -139,14 +139,14 @@ const ListingForm = ({ editing }) => {
         className="w-full p-2 border rounded mb-2"
         required
       > 
-        <option value="Home" selected>Home</option>
-        <option value="Villa">Villa</option>
-        <option value="Apartment">Apartment</option>
-        <option value="Building">Building</option>
-        <option value="Office">Office</option>
-        <option value="Townhouse">Townhouse</option>
-        <option value="Shop">Shop</option>
-        <option value="Garage">Garage</option>
+        <option value="home" selected>Home</option>
+        <option value="villa">Villa</option>
+        <option value="apartment">Apartment</option>
+        <option value="building">Building</option>
+        <option value="office">Office</option>
+        <option value="townhouse">Townhouse</option>
+        <option value="shop">Shop</option>
+        <option value="garage">Garage</option>
       </select> <br />
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         {editing ? 'Update Listing' : 'Add Listing'}

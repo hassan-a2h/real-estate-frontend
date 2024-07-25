@@ -19,7 +19,7 @@ import NotFound from './pages/404';
 import ErrorBoundary from './pages/Error';
 import io from 'socket.io-client';
 
-const socket = io(window.location.origin, {
+export const socket = io(window.location.origin, {
   transports: ['websocket']
 });
 
@@ -56,6 +56,8 @@ function App() {
       console.error('Error fetching unread messages:', error);
     }
   };
+
+  console.log('unread messages at the moment:', unreadMessages);
 
   return (
     <Router>

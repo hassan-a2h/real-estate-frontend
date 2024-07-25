@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import MessageList from './MessageList';
 import MessageForm from './MessageForm';
-import { io } from 'socket.io-client';
-
-const socket = io('http://192.168.10.91:3000');
+import { socket } from '../../App';
 
 const ChatContent = ({ currentChat, userId, socket }) => {
   const [messages, setMessages] = useState([]);

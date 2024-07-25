@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { io } from 'socket.io-client';
+import { socket } from '../../App';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ChatSidebar from './ChatSidebar';
 import ChatContent from './ChatContent';
-
-const socket = io('http://192.168.10.91:3000');
 
 const Chat = ({ unreadMessages }) => {
   const id = localStorage.getItem('userId');

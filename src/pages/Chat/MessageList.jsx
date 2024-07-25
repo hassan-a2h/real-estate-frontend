@@ -63,6 +63,8 @@ const MessageList = ({ messages, userId, titleMessages, fetchTitleMessages, load
 
 const renderMessage = (msg, index, userId, titleMessages, fetchTitleMessages, isLast, sentinelRef) => {
   if (msg.isPropertyTitle) {
+    // for property title messages, the message field contains 
+    // the id of the property which started the chat
     if (!titleMessages?.[msg.message]) {
       fetchTitleMessages(msg.message);
     }
